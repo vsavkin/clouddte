@@ -1,0 +1,40 @@
+name: Containers
+
+on: [ pull_request ]
+
+env:
+  NX_VERBOSE_LOGGING: true
+  NX_BRANCH: ${{ github.event.number }}
+  NX_RUN_GROUP: ${{ github.run_id }}
+  NX_CLOUD_DISTRIBUTED_EXECUTION: true
+
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npx nx run-many --target=test --all --parallel
+      - run: npx nx run-many --target=build --all --parallel
+      - run: npx nx-cloud stop-all-agents
+
+  agent_1:
+    runs-on: ubuntu-latest
+    name: Agent 1
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npx nx-cloud start-agent
+
+  agent_2:
+    runs-on: ubuntu-latest
+    name: Agent 2
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npx nx-cloud start-agent
