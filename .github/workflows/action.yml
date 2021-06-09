@@ -9,6 +9,7 @@ on:
 env:
   NX_VERBOSE_LOGGING: true
   NX_BRANCH: ${{ github.event.number || github.ref }}
+  NX_RUN_GROUP: ${{ github.run_id }}
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
 
 jobs:
@@ -26,7 +27,6 @@ jobs:
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v1
-      - run: echo $NX_RUN_GROUP
       - run: npm install
       - run: npx nx affected --base=HEAD~1 --target=build --parallel --max-parallel=3
       - run: npx nx affected --base=HEAD~1 --target=test --parallel --max-parallel=2
@@ -41,12 +41,6 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
       - uses: actions/setup-node@v1
-      - run: echo "NX_RUN_GROUP_LOCAL=AAA" >> ${GITHUB_ENV}
-      - run: echo $NX_RUN_GROUP
-      - run: echo $NX_RUN_GROUP_LOCAL
-      - run: echo $GITHUB_ENV
-      - run: echo ${{env.NX_RUN_GROUP}}
-      - run: echo ${{env.NX_RUN_GROUP_LOCAL}}
       - run: npm install
       - run: npx nx affected --base=origin/main --target=build --parallel --max-parallel=3
       - run: npx nx affected --base=origin/main --target=test --parallel --max-parallel=2
