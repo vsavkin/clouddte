@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'pull_request' }}
     steps:
-      - uses: echo $NX_RUN_GROUP
+      - run: echo $NX_RUN_GROUP
       - uses: actions/checkout@v2
         name: Checkout [main]
         with:
