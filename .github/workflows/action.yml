@@ -21,12 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'pull_request' }}
     steps:
-      - run: echo $NX_RUN_GROUP
       - uses: actions/checkout@v2
         name: Checkout [main]
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v1
+      - run: echo $NX_RUN_GROUP
       - run: npm install
       - run: npx nx affected --base=HEAD~1 --target=build --parallel --max-parallel=3
       - run: npx nx affected --base=HEAD~1 --target=test --parallel --max-parallel=2
