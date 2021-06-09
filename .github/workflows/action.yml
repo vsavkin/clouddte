@@ -9,14 +9,19 @@ on:
 env:
   NX_VERBOSE_LOGGING: true
   NX_BRANCH: ${{ github.event.number || github.ref }}
-  NX_RUN_GROUP: ${{ JSON.format(github) }}
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
 
 jobs:
+  run_group:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "NX_RUN_GROUP=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
+
   main:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'pull_request' }}
     steps:
+      - uses: echo $NX_RUN_GROUP
       - uses: actions/checkout@v2
         name: Checkout [main]
         with:
