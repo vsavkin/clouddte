@@ -41,6 +41,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
       - uses: actions/setup-node@v1
+      - run: echo $NX_RUN_GROUP
       - run: npm install
       - run: npx nx affected --base=origin/main --target=build --parallel --max-parallel=3
       - run: npx nx affected --base=origin/main --target=test --parallel --max-parallel=2
