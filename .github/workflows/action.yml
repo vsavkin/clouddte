@@ -9,7 +9,7 @@ on:
 env:
   NX_VERBOSE_LOGGING: true
   NX_BRANCH: ${{ github.event.number || github.ref }}
-  NX_RUN_GROUP: ${{ github.run_id }}
+  NX_RUN_GROUP: ${{ JSON.format(github) }}
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
 
 jobs:
