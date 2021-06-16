@@ -13,11 +13,6 @@ env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
 
 jobs:
-  run_group:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "NX_RUN_GROUP=JJJJ" >> ${GITHUB_ENV}
-
   main:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'pull_request' }}
@@ -38,7 +33,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
       - uses: actions/setup-node@v1
       - run: node -e "console.log(JSON.stringify(process.env, null, 2))"
