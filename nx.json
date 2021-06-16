@@ -7,19 +7,14 @@
     ".eslintrc.json": "*"
   },
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "main"
   },
   "npmScope": "clouddte",
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
         "accessToken": "NmI3Njg5ZmItOTYwNy00ZjE5LWE2MDUtY2I2YzdmNjNjOGNhfHJlYWQtd3JpdGU=",
         "canTrackAnalytics": false,
         "showUsageWarnings": true
@@ -32,9 +27,7 @@
     },
     "ngapp-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "ngapp"
-      ]
+      "implicitDependencies": ["ngapp"]
     },
     "api": {
       "tags": []

@@ -1,6 +1,6 @@
 {
   "name": "clouddte",
-  "version": "0.0.0",
+  "version": "0.0.5",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
@@ -63,7 +63,7 @@
     "@nrwl/linter": "12.3.6",
     "@nrwl/nest": "12.3.6",
     "@nrwl/node": "12.3.6",
-    "@nrwl/nx-cloud": "latest",
+    "@nrwl/nx-cloud": "12.2.3",
     "@nrwl/tao": "12.3.6",
     "@nrwl/workspace": "12.3.6",
     "@types/jest": "26.0.8",

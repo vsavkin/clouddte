@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+env:
+  NX_VERBOSE_LOGGING: true
+  NX_CLOUD_DISTRIBUTED_EXECUTION: true
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout [main]
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npx nx affected --base=HEAD~1 --target=build --parallel --max-parallel=3
+      - run: npx nx affected --base=HEAD~1 --target=test --parallel --max-parallel=2
+      - run: npx nx-cloud stop-all-agents
+
+  pr:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+      - run: node -e "console.log(JSON.stringify(process.env, null, 2))"
+      - run: npm install
+      - run: npx nx affected --base=origin/main --target=build --parallel --max-parallel=3
+      - run: npx nx affected --base=origin/main --target=test --parallel --max-parallel=2
+      - run: npx nx-cloud stop-all-agents
+
+  agent_1:
+    runs-on: ubuntu-latest
+    name: Agent 1
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npx nx-cloud start-agent
+
+  agent_2:
+    runs-on: ubuntu-latest
+    name: Agent 2
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npx nx-cloud start-agent
+
+  agent_3:
+    runs-on: ubuntu-latest
+    name: Agent 3
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npx nx-cloud start-agent
